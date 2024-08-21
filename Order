@@ -1,0 +1,19 @@
+CREATE TABLE order_management (
+  Order_ID INT PRIMARY KEY AUTO_INCREMENT,
+  Customer_ID INT,
+  Customer_Name VARCHAR(255),
+  Customer_Number VARCHAR(20),
+  Item_ID INT,
+  Item_Name VARCHAR(255),
+  Item_Price DECIMAL(5,2),
+  Item_Category ENUM('hot', 'cold', 'desserts'),
+  FOREIGN KEY (Customer_ID) REFERENCES customer(Customer_ID),
+  FOREIGN KEY (Item_ID) REFERENCES cafe_items(item_id)
+);
+
+INSERT INTO order_management (Customer_ID, Customer_Name, Customer_Number, Item_ID, Item_Name, Item_Price, Item_Category)
+SELECT c.Customer_ID, c.Customer_Name, c.Customer_Number, i.item_id, c.item_name, i.item_price, i.item_category
+FROM customer c
+JOIN cafe_items i ON c.item_name = i.item_name;
+
+SELECT * FROM order_management;
